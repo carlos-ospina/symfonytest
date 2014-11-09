@@ -3,16 +3,17 @@
 
 namespace Blog\ModelBundle\DataFixtures\ORM;
 
+use Blog\ModelBundle\Entity\Author;
 use Blog\ModelBundle\Entity\Post;
-use Doctrine\Common\DataFixtures\AbstracFixtures;
-use Doctrine\Common\DataFixtures\OrderedModelInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 
 /**
  * Fixture for the Posts Entity
  */
-class Posts extends AbstracFixture implements OrderedFixteruInterface
+class Posts extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -29,7 +30,7 @@ class Posts extends AbstracFixture implements OrderedFixteruInterface
     {
         $p1 = new Post();
         $p1->setTitle('Lorem Ipsum Dolor Sit Amet');
-        $p1->getBody('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fringilla arcu mauris, in pellentesque magna facilisis in. Nulla nunc augue, sodales eget nulla eget, mattis volutpat diam. Pellentesque ipsum mi, aliquet feugiat pretium non, pulvinar quis metus. Integer suscipit magna lacus, a tempus massa interdum vitae. Suspendisse eu laoreet mi. Nulla libero elit, varius luctus magna quis, porta ornare nibh. Proin quis fermentum tellus. Donec in ligula at ipsum bibendum vestibulum in in sapien.');
+        $p1->setBody('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fringilla arcu mauris, in pellentesque magna facilisis in. Nulla nunc augue, sodales eget nulla eget, mattis volutpat diam. Pellentesque ipsum mi, aliquet feugiat pretium non, pulvinar quis metus. Integer suscipit magna lacus, a tempus massa interdum vitae. Suspendisse eu laoreet mi. Nulla libero elit, varius luctus magna quis, porta ornare nibh. Proin quis fermentum tellus. Donec in ligula at ipsum bibendum vestibulum in in sapien.');
         $p1->setAuthor($this->getAuthor($manager, 'David'));
 
         $p2 = new Post();
@@ -61,7 +62,7 @@ class Posts extends AbstracFixture implements OrderedFixteruInterface
     {
         return  $manager->getRepository('ModelBundle:Author')->findOneBy(
             array(
-                'name'=>$manager
+                'name'=>$name
             )
         );
     }

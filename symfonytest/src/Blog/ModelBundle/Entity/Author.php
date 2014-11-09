@@ -4,6 +4,7 @@ namespace Blog\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Author
@@ -29,17 +30,21 @@ class Author extends Timestampable
      * @Assert\NotBlank
      */
     private $name;
+
     /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="author", cascade={"remove"})
      */
     private $post;
+
     /**
      * Constructor
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->post = new ArrayCollection();
     }
 
@@ -47,11 +52,11 @@ class Author extends Timestampable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
-       return $this->id;
+        return $this->id;
     }
 
     /**
@@ -71,7 +76,7 @@ class Author extends Timestampable
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -105,7 +110,7 @@ class Author extends Timestampable
     /**
      * Get post
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPost()
     {
