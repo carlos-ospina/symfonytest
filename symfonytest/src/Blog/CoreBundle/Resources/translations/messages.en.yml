@@ -1,4 +1,9 @@
 home: Home
+
+by: by
+read.more: read more
+
 post:
   plural: Posts
-  on:
+  on: Posten on
+  latest: Latest posts

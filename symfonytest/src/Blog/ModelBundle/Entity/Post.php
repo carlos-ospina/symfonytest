@@ -4,12 +4,13 @@ namespace Blog\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Post
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Blog\ModelBundle\Repository\PostRepository")
  */
 class Post extends Timestampable
 {
@@ -33,6 +34,14 @@ class Post extends Timestampable
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"title"}, unique=false)
+     * @ORM\Column(length=255)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="body", type="text")
      * @Assert\NotBlank
      */
@@ -47,10 +56,10 @@ class Post extends Timestampable
      */
     private $author;
 
-     /**
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,11 +83,35 @@ class Post extends Timestampable
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Post
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -98,13 +131,12 @@ class Post extends Timestampable
     /**
      * Get body
      *
-     * @return string 
+     * @return string
      */
     public function getBody()
     {
         return $this->body;
     }
-
 
 
     /**
@@ -124,7 +156,7 @@ class Post extends Timestampable
     /**
      * Get author
      *
-     * @return \Blog\ModelBundle\Entity\Author 
+     * @return \Blog\ModelBundle\Entity\Author
      */
     public function getAuthor()
     {
