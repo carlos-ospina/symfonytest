@@ -24,9 +24,38 @@ class PostController extends Controller
         $latestPosts = $this->getDoctrine()->getRepository('ModelBundle:Post')->findLatest(5);
 
         return array(
-            'posts'         => $posts,
-            'latestPost'    => $latestPosts
+            'posts' => $posts,
+            'latestPost' => $latestPosts
         );
     }
+
+    /**
+     * Show a post
+     *
+     * @param string $slug
+     *
+     * @throws NotFoundHttpException
+     * @return array
+     *
+     * @Route("/{slug}")
+     * @Template()
+     */
+    public function showAction($slug)
+    {
+        $post = $this->getDoctrine()->getRepository('ModelBundle:Post')->findOneBy(
+            array(
+                'slug'=>$slug
+            )
+        );
+
+        if (null == $post) {
+            throw $this->createNotFoundException('Post was not found');
+        }
+
+        return array(
+            'post' => $post
+        );
+    }
+
 
 }
