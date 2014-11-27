@@ -29,14 +29,52 @@ class PostControllerTest extends WebTestCase
     public function testShow()
     {
         $client = static::createClient();
-        /** @var Post $post
-         */
+        /** @var Post $post */
         $post = $client->getContainer()->get('doctrine')->getManager()->getRepository('ModelBundle:Post')->findFirst();
 
-        $crawler = $client->request('GET', '/'.$post->getSlug());
+        $crawler = $client->request('GET', '/' . $post->getSlug());
 
         $this->assertTrue($client->getResponse()->isSuccessful(), 'The response is not succesful');
 
         $this->assertEquals($post->getTitle(), $crawler->filter('h1')->text(), 'invalid post title');
+
+        $this->assertGreaterThanOrEqual(1, $crawler->filter('article.comment')->count(), 'ther should be at least one comment');
+
     }
+
+    /**
+     * Test create comment
+     */
+    public function testCreateComment()
+    {
+
+        $client = static::createClient();
+        /** @var Post $post */
+        $post = $client->getContainer()->get('doctrine')->getManager()->getRepository('ModelBundle:Post')->findFirst();
+
+        $crawler = $client->request('GET', '/' . $post->getSlug());
+
+        $buttonCrawlerNode = $crawler->selectButton('Send');
+
+        $form = $buttonCrawlerNode->form(array(
+            'blog_modelbunle_comment[authorName]' => 'A humble commenter',
+            'blog_modelbunle_comment[body]' => ' Hi im commenting about symfony 2!!!',
+        ));
+
+        $client->submit($form);
+
+        $this->assertTrue(
+            $client->getResponse()->isRedirect('/' . $post->getSlug(), 'Ther was no redirection after submiting the form')
+        );
+
+        $crawler = $client->followRedirect();
+
+        $this->assertCount(
+            1,
+            $crawler->filter('html:contains("your comment was submitted succesfully")'),
+            'There was nor any confirmation message'
+        );
+
+    }
+
 }
