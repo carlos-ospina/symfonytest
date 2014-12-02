@@ -4,6 +4,8 @@ on: en
 by: por
 read.more: Leer más
 author: Autor
+name: Nombre
+send: Enviar
 
 post:
   plural: Posts
@@ -14,7 +16,9 @@ post:
   comments: '{0} Sin comentarios|{1} %count% comentario|]1,Inf] %comentarios%'
 
 comment:
-  plural: Commentarios
+  singular: Comentario
+  plural: Comentarios
+  write: Escribe tu comentario
 
 author:
   empty.post: este autor no ha escrito ningun post todavia.

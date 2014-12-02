@@ -4,6 +4,8 @@ on: on
 by: by
 read.more: read more
 author: Author
+name: Name
+send: Send
 
 post:
   plural: Posts
@@ -11,10 +13,12 @@ post:
   latest: Latest posts
   by: Post by
   by.author: Post by %name%
-  comments: '{0} No comments|{1} %count% comment|]1,Inf] %comments%'
+  comments: '{0} No comments|{1} %count% comment|]1,Inf] %count% comments'
 
 comment:
+  singular: Comment
   plural: Comments
+  write: Write your comment
 
 
 author:

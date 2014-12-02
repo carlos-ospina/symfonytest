@@ -1,35 +1,27 @@
 {% extends "::base.html.twig" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/core/css/main.css') }}"
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/css/main.css') }}">
 {% endblock %}
 
 {% block body %}
     <header>
-        <p>Symfony 2 Blog</p>
+        <p>Symfony 2 Blog - Admin</p>
         <nav>
             <ul>
-                <li><a href="{{ path('blog_core_post_index')}}">{{ 'home' | trans }}</a>
-                </li>
+                <li><a href="#">Post</a></li>
+                <li><a href="#">Authors</a></li>
             </ul>
         </nav>
     </header>
-    {% block sidebar %}{% endblock %}
 
     <section>
-
         {% for type, messages in app.session.flashBag.all() %}
             {% for message in messages %}
                 <p class="session-message">{{ message }}</p>
             {% endfor %}
-
         {% endfor %}
 
-
-        {% block section %}{% endblock section %}
+        {% block session %}{% endblock %}
     </section>
-
-    <footer>
-        <p>{{ 'now' | date('Y') }}Symfony 2 Blog</p>
-    </footer>
 {% endblock %}

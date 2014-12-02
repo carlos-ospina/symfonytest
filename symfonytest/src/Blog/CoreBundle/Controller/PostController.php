@@ -2,9 +2,14 @@
 
 namespace Blog\CoreBundle\Controller;
 
+use Blog\ModelBundle\Entity\Comment;
+use Blog\ModelBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Class PostController
@@ -44,7 +49,7 @@ class PostController extends Controller
     {
         $post = $this->getDoctrine()->getRepository('ModelBundle:Post')->findOneBy(
             array(
-                'slug'=>$slug
+                'slug' => $slug
             )
         );
 
@@ -52,10 +57,59 @@ class PostController extends Controller
             throw $this->createNotFoundException('Post was not found');
         }
 
+        $form = $this->createForm(new CommentType());
+
         return array(
-            'post' => $post
+            'post' => $post,
+            'form' => $form->createView()
         );
     }
 
+    /**
+     * Create comment
+     *
+     * @param Request $request
+     * @param string  $slug
+     *
+     * @Route("{slug}/create-comment")
+     * @Method("POST")
+     * @Template("CoreBundle:Post:Show.html.twig")
+     *
+     * @throws NotFoundHttpException
+     * @return array
+     */
+    public function createCommentAction(Request $request, $slug)
+    {
+        $post = $this->getDoctrine()->getRepository('ModelBundle:Post')->findOneBy(
+            array(
+                'slug' => $slug
+            )
+        );
 
+        if (null === $post) {
+            throw $this->createNotFoundException('Post was not found');
+        }
+
+        $comment = new Comment();
+        $comment->setPost($post);
+
+        $form = $this->createForm(new CommentType(), $comment);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->getDoctrine()->getManager()->persist($comment);
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->get('session')->getFlashBag()->add('succes', 'your comment was submited successfuly');
+
+            return $this->redirect($this->generateUrl('blog_core_post_show', array('slug' => $post->getSlug())));
+        }
+
+        return array(
+            'post' => $post,
+            'form' => $form->createView()
+        );
+
+        return array();
+    }
 }
