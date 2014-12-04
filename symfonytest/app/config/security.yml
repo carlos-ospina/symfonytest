@@ -10,7 +10,9 @@ security:
         in_memory:
             memory:
                 users:
-                    admin: { password: admin, roles: [ 'ROLE_ADMIN' ] }
+                    admin:
+                      password:   admin
+                      roles:      [ROLE_ADMIN]
 
     firewalls:
         dev:

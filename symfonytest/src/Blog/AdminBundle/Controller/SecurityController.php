@@ -2,7 +2,7 @@
 
 
 namespace Blog\AdminBundle\Controller;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -34,7 +34,7 @@ class SecurityController extends Controller
         }
 
         return $this->render(
-            'AdminBundel:Security:login.html.twig',
+            'AdminBundle:Author/Security:login.html.twig',
             array(
                 //Last username netered by de user
                 'last_username' => $session->get(SecurityContextInterface::LAST_USERNAME),
@@ -46,7 +46,7 @@ class SecurityController extends Controller
     /**
      * Login check
      *
-     * @Route("login_check")
+     * @Route("/login_check")
      */
     public function loginCheckAction()
     {
