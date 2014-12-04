@@ -61,7 +61,7 @@ class AuthorController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('author_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('blog_admin_author_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -73,14 +73,14 @@ class AuthorController extends Controller
     /**
      * Creates a form to create a Author entity.
      *
-     * @param Author $entity The entity
+     * @param Author $entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Author $entity)
     {
         $form = $this->createForm(new AuthorType(), $entity, array(
-            'action' => $this->generateUrl('author_create'),
+            'action' => $this->generateUrl('blog_admin_author_create'),
             'method' => 'POST',
         ));
 
@@ -177,14 +177,14 @@ class AuthorController extends Controller
     /**
      * Creates a form to edit a Author entity.
      *
-     * @param Author $entity The entity
+     * @param Author $entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Author $entity)
     {
         $form = $this->createForm(new AuthorType(), $entity, array(
-            'action' => $this->generateUrl('author_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('blog_admin_author_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -224,7 +224,7 @@ class AuthorController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('author_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('blog_admin_author_edit', array('id' => $id)));
         }
 
         return array(
@@ -263,7 +263,7 @@ class AuthorController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('author'));
+        return $this->redirect($this->generateUrl('blog_admin_author_index'));
     }
 
     /**
@@ -276,7 +276,7 @@ class AuthorController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('author_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('blog_admin_author_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();

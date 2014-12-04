@@ -1,13 +1,15 @@
-{% extends '::base.html.twig' %}
+{% extends 'AdminBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Author edit</h1>
+{% block tittle %}Edit {{ entity.name }}{% endblock %}
+
+{% block section %}
+    <h1>Edit {{ entity.name }}</h1>
 
     {{ form(edit_form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('author') }}">
+        <a href="{{ path('blog_admin_author_index') }}">
             Back to the list
         </a>
     </li>
