@@ -144,4 +144,12 @@ class Author extends Timestampable
     {
         return $this->post;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

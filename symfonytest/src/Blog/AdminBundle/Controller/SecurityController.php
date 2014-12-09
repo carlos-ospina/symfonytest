@@ -4,10 +4,11 @@
 namespace Blog\AdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bridge\Twig\Node\RenderBlockNode;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SecurityController
@@ -20,12 +21,10 @@ class SecurityController extends Controller
      * @return Response
      *
      * @Route("/login")
-     *
-     *
      */
     public function loginAction()
     {
-        $request = $this->get('request');
+        $request = $this->get('request_stack')->getCurrentRequest();
         $session = $request->getSession();
 
         //Get de login error if ther is one
@@ -52,6 +51,15 @@ class SecurityController extends Controller
      * @Route("/logincheck")
      */
     public function loginCheckAction()
+    {
+    }
+
+    /**
+     * Logout
+     *
+     * @Route ("logout")
+     */
+    public function logoutAction()
     {
     }
 }
