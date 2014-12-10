@@ -26,27 +26,24 @@ class AuthorController extends Controller
      */
     public function showAction($slug)
     {
-        $author = $this->getDoctrine()->getRepository('ModelBundle:Author')->findOneBy(
-            array(
-                'slug' => $slug
-            )
-        );
+        $author = $this->getAuthorManager()->findBySlug($slug);
 
-        if (null == $author) {
-            throw $this->createNotFoundException('author was not found');
-        }
-
-
-        $posts = $this->getDoctrine()->getRepository('ModelBundle:Post')->findBy(
-            array(
-                'author' => $author
-            )
-        );
+        $posts = $this->getAuthorManager()->findPosts($author);
 
         return array(
             'author' => $author,
             'posts' => $posts
         );
+    }
+
+    /**
+     * Get author manager
+     *
+     * @return AuthorManager
+     */
+    private function getAuthorManager()
+    {
+        return $this->get('authorManager');
     }
 
 }
