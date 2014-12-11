@@ -17,7 +17,7 @@ class PostControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/en/');
         $this->assertTrue($client->getResponse()->isSuccessful(), 'The response was not successful');
         $this->assertCount(3, $crawler->filter('h2'), ' there shold be three displayed posts');
 
@@ -32,7 +32,7 @@ class PostControllerTest extends WebTestCase
         /** @var Post $post */
         $post = $client->getContainer()->get('doctrine')->getManager()->getRepository('ModelBundle:Post')->findFirst();
 
-        $crawler = $client->request('GET', '/' . $post->getSlug());
+        $crawler = $client->request('GET', '/en/' . $post->getSlug());
 
         $this->assertTrue($client->getResponse()->isSuccessful(), 'The response is not succesful');
 
@@ -52,7 +52,7 @@ class PostControllerTest extends WebTestCase
         /** @var Post $post */
         $post = $client->getContainer()->get('doctrine')->getManager()->getRepository('ModelBundle:Post')->findFirst();
 
-        $crawler = $client->request('GET', '/' . $post->getSlug());
+        $crawler = $client->request('GET', '/en/' . $post->getSlug());
 
         $buttonCrawlerNode = $crawler->selectButton('Send');
 
@@ -64,7 +64,7 @@ class PostControllerTest extends WebTestCase
         $client->submit($form);
 
         $this->assertTrue(
-            $client->getResponse()->isRedirect('/'.$post->getSlug()), 'there was no redirection after submiting the form'
+            $client->getResponse()->isRedirect('/en/'.$post->getSlug()), 'there was no redirection after submiting the form'
         );
 
         $crawler = $client->followRedirect();
